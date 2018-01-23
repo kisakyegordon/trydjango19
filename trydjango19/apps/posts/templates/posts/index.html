@@ -2,5 +2,12 @@
 
     <body>
         <h4> {{ title }} Says Try Django 9 Tutorial </h4>
+
+        {% for list in lists_all %}
+            {{ list.title }} <br />
+            {{ list.content }} <br />
+            {{ list.created }} <br />
+            <br />
+        {% endfor %}
     </body>
 </html>
