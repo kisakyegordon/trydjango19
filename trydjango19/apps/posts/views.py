@@ -1,15 +1,24 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import render
 # Create your views here.
 
 def posts_home(request):
     return HttpResponse("<h1> Hello </h1>")
 
 def posts_create(request):
-    return HttpResponse("<h1> Create </h1>")
+    # return HttpResponse("<h1> Create </h1>")
+    context = {
+        "title": "Create is working"
+    }
+    return render(request, "posts/index.html", context)
 
 def posts_detail(request):
-    return HttpResponse("<h1> Detail</h1>")
+    # return HttpResponse("<h1> Detail</h1>")
+    context = {
+        "title": "Detail is working"
+    }
+    return render( request, "posts/index.html", context)
 
 def posts_update(request):
     return HttpResponse("<h1> Update </h1>")

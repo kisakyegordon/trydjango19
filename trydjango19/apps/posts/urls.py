@@ -1,11 +1,17 @@
 from django.conf.urls import url, include
 from django.contrib import admin
-from . import views
+from .views import ( 
+    posts_home,
+    posts_create,
+    posts_detail,
+    posts_update,
+    posts_delete,
+    )
 
 urlpatterns = [
-    url(r'^$', "trydjango19.apps.posts.views.posts_home"),
-    url(r'^create$', "trydjango19.apps.posts.views.posts_create"),
-    url(r'^detail$', "trydjango19.apps.posts.views.posts_detail"),
-    url(r'^update$', "trydjango19.apps.posts.views.posts_update"),
-    url(r'^delete$', "trydjango19.apps.posts.views.posts_delete"),
+    url(r'^$', posts_home),
+    url(r'^create$', posts_create),
+    url(r'^detail$', posts_detail),
+    url(r'^update$', posts_delete),
+    url(r'^delete$', posts_update),
 ]
