@@ -4,7 +4,7 @@
         <h4> {{ title }} Says Try Django 9 Tutorial </h4>
 
         {% for list in lists_all %}
-            {{ list.title }} <br />
+            <a href="{% url "post_detail" id=list.id %}">{{ list.title }} </a><br />
             {{ list.content }} <br />
             {{ list.created }} <br />
             <br />
