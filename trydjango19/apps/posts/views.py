@@ -1,35 +1,61 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Posts
-# Create your views here.
+from .forms import PostForm
 
 def posts_home(request):
+    """ Handles display of all available lists """
     queryset = Posts.objects.all()
     context = {
         "lists_all": queryset
     }
     return render(request, "posts/index.html", context)
-    # return HttpResponse("<h1> Hello </h1>")
 
 def posts_create(request):
-    # return HttpResponse("<h1> Create </h1>")
-    context = {
-        "title": "Create is working"
-    }
-    return render(request, "posts/index.html", context)
+
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+            return redirect("post_detail", id=post.id)
+    else:
+        form = PostForm()
+    return render(request, "posts/create.html", {'form':form})
 
 def posts_detail(request, id):
-    # return HttpResponse("<h1> Detail</h1>")
+    """
+    Handles single display of an article
+    """
     instance = get_object_or_404(Posts, id=id)
     context = {
         "title": "Detail is working",
         "instance": instance
     }
-    return render( request, "posts/post_detail.html", context)
+    return render(request, "posts/post_detail.html", context)
 
-def posts_update(request):
-    return HttpResponse("<h1> Update </h1>")
+def posts_update(request, id):
+    """
+    Handles editing an article
+    """
+    instance = get_object_or_404(Posts, id=id)
+    form = PostForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+        return redirect("post_home")
+
+    context = {
+        "instance": instance,
+        "form": form
+    }
+    return render(request, "posts/create.html", context)
+
 
 def posts_delete(request):
+    """
+    Handles deleting an article
+    """
     return HttpResponse("<h1> Delete </h1>")
+
