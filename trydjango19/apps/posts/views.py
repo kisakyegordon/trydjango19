@@ -56,9 +56,12 @@ def posts_update(request, id):
     return render(request, "posts/create.html", context)
 
 
-def posts_delete(request):
+def posts_delete(request, id=None):
     """
     Handles deleting an article
     """
-    return HttpResponse("<h1> Delete </h1>")
+    instance = get_object_or_404(Posts, id=id)
+    instance.delete()
+    messages.success(request, "Deleted Successfully")
+    return redirect("post_home")
 
