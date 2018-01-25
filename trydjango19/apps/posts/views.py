@@ -11,7 +11,7 @@ def posts_home(request):
     context = {
         "lists_all": queryset
     }
-    return render(request, "posts/index.html", context)
+    return render(request, "posts/base.html", context)
 
 def posts_create(request):
 

@@ -9,6 +9,7 @@
         </ul>
         {% endif %}
         
+        {% block content %}
         <h4> {{ title }} Says Try Django 9 Tutorial </h4>
 
         {% for list in lists_all %}
@@ -17,5 +18,7 @@
             {{ list.created }} <br />
             <br />
         {% endfor %}
+
+        {% endblock %}
     </body>
 </html>
