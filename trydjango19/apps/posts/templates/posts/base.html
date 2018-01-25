@@ -17,12 +17,28 @@
         {% block content %}
         <h4> {{ title }} Says Try Django 9 Tutorial </h4>
 
-        {% for list in lists_all %}
+        {% for list in lists %}
             <a href="{% url "post_detail" id=list.id %}">{{ list.title }} </a><br />
             {{ list.content }} <br />
             {{ list.created }} <br />
             <br />
         {% endfor %}
+
+        <div class="pagination">
+                <span class="step-links">
+                    {% if lists.has_previous %}
+                        <a href="?page={{ lists.previous_page_number }}">previous</a>
+                    {% endif %}
+            
+                    <span class="current">
+                        Page {{ lists.number }} of {{ lists.paginator.num_pages }}.
+                    </span>
+            
+                    {% if lists.has_next %}
+                        <a href="?page={{ lists.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
+            </div>
 
         {% endblock %}
     </body>
