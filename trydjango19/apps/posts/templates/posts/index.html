@@ -1,6 +1,14 @@
 <html>
 
     <body>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        
         <h4> {{ title }} Says Try Django 9 Tutorial </h4>
 
         {% for list in lists_all %}
