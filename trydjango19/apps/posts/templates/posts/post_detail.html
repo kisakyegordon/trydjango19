@@ -4,6 +4,9 @@
 
         <h4> {{ instance.title }} </h4>
 
+        {% if instance.image %}    
+        <img src='{{ instance.image.url }}' class="img-responsive"/> <br />
+        {% endif %}
             {{ instance.id }} <br />
             {{ instance.title }} <br />
             {{ instance.content }} <br />
