@@ -10,6 +10,8 @@ class Posts(models.Model):
     image = models.FileField(blank=True, null=True)
     slug = models.SlugField(unique=True)
     content = models.TextField(max_length=200)
+    draft = models.BooleanField(default=False)
+    publish = models.DateField(null=True, auto_now=False, auto_now_add=False)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
 

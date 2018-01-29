@@ -5,6 +5,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Posts
 from .forms import PostForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+
 
 
 # def listing(request):
@@ -22,8 +25,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 #         contacts = paginator.page(paginator.num_pages)
 
 #     return render(request, 'list.html', {'contacts': contacts})
-
-
 
 
 def posts_home(request):
@@ -93,4 +94,3 @@ def posts_delete(request, id=None):
     instance.delete()
     messages.success(request, "Deleted Successfully")
     return redirect("post_home")
-

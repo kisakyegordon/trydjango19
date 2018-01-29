@@ -5,13 +5,23 @@
         <h4> {{ instance.title }} </h4>
 
         {% if instance.image %}    
-        <img src='{{ instance.image.url }}' class="img-responsive"/> <br />
+        <img src='{{ instance.image.url}}' class="img-responsive"/> <br />
         {% endif %}
+        <div class="fb-like" data-href=" {{ request.build_absolute_uri }} " data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+        <hr />
+            <span><p> Published: </p>
+            {% if instance.draft %}
+                <span style='color:red;font-weight:600;'> Draft </span>
+            {% endif %}
+            {{ instance.publish }} <br />
+            </span>
             {{ instance.id }} <br />
             {{ instance.title }} <br />
             {{ instance.content }} <br />
             {{ instance.created }} <br />
             {{ instance.updated }} <br />
+
+            <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
             <br />
 {% endblock %}
-
+<!-- /Users/elgordo/code/trydjango19/media/car.jpg -->
