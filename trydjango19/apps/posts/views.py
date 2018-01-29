@@ -8,6 +8,7 @@ from .forms import PostForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from django.db.models import Q
 
 
 
@@ -32,9 +33,16 @@ def posts_home(request):
     """ Handles display of all available lists """
     # queryset = Posts.objects.filter(draft=False).filter(publish__lte=timezone.now()).order_by("-created")
     queryset = Posts.objects.active().order_by("-created")
+
+    query = request.GET.get("q")
+    if query:
+        queryset = Posts.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) ).distinct()
+
     if request.user.is_staff or request.user.is_superuser:
         queryset = Posts.objects.all().order_by("-created")
-    paginator = Paginator(queryset, 5) # show 5 articles per page
+    paginator = Paginator(queryset, 2) # show 5 articles per page
     page = request.GET.get('page')
 
     try:
@@ -43,7 +51,6 @@ def posts_home(request):
         lists = paginator.page(1)
     except EmptyPage:
         lists = paginator.page(paginator.num_pages)
-
 
     context = {
         "lists_all": queryset,

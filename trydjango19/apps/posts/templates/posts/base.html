@@ -27,6 +27,11 @@
         {% block content %}
         <h4> {{ title }} Says Try Django 9 Tutorial </h4>
 
+        <form method="GET" >
+            <input type="text" name="q" placeholder="search posts" value= {{ request.GET.q }} />
+            <input type="submit" value="search" />
+        </form>
+
         {% for list in lists %}
             <a href="{% url "post_detail" id=list.id %}">{{ list.title }} </a><br />
             {{ list.content }} <br />
@@ -37,7 +42,7 @@
         <div class="pagination">
                 <span class="step-links">
                     {% if lists.has_previous %}
-                        <a href="?page={{ lists.previous_page_number }}">previous</a>
+                        <a href="?page={{ lists.previous_page_number }}&q={{ request.GET.q }}">previous</a>
                     {% endif %}
             
                     <span class="current">
@@ -45,7 +50,7 @@
                     </span>
             
                     {% if lists.has_next %}
-                        <a href="?page={{ lists.next_page_number }}">next</a>
+                        <a href="?page={{ lists.next_page_number }}&q={{ request.GET.q }}">next</a>
                     {% endif %}
                 </span>
             </div>
