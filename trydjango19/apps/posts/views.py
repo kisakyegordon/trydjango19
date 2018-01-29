@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
+from django.shortcuts import Http404, render, get_object_or_404, redirect
 from .models import Posts
 from .forms import PostForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -29,7 +30,10 @@ from django.core.files.storage import FileSystemStorage
 
 def posts_home(request):
     """ Handles display of all available lists """
-    queryset = Posts.objects.all().order_by("-created")
+    # queryset = Posts.objects.filter(draft=False).filter(publish__lte=timezone.now()).order_by("-created")
+    queryset = Posts.objects.active().order_by("-created")
+    if request.user.is_staff or request.user.is_superuser:
+        queryset = Posts.objects.all().order_by("-created")
     paginator = Paginator(queryset, 5) # show 5 articles per page
     page = request.GET.get('page')
 
@@ -49,6 +53,9 @@ def posts_home(request):
 
 def posts_create(request):
 
+    if not request.user.is_staff or not request.user.is_superuser:
+        return Http404
+
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES or None)
         if form.is_valid():
@@ -62,10 +69,15 @@ def posts_create(request):
 
 def posts_detail(request, id):
     """ Handles single display of an article """
+    today = timezone.now().date()
     instance = get_object_or_404(Posts, id=id)
+    if instance.publish > timezone.now().date():
+        if not request.user.is_staff or not request.user.is_superuser:
+            raise Http404
     context = {
         "title": "Detail is working",
-        "instance": instance
+        "instance": instance,
+        "today": today,
     }
     return render(request, "posts/post_detail.html", context)
 

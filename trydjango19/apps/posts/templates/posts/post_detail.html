@@ -13,6 +13,11 @@
             {% if instance.draft %}
                 <span style='color:red;font-weight:600;'> Draft </span>
             {% endif %}
+
+            {% if instance.publish > today %}
+                <p> Future Post </p>
+            {% endif %}
+
             {{ instance.publish }} <br />
             </span>
             {{ instance.id }} <br />

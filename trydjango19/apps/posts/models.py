@@ -3,6 +3,9 @@ from django.utils.text import slugify
 from django.db.models.signals import pre_save
 
 # Create your models here.
+class PostManager(models.Manager):
+    def active(self, *args, **kwargs):
+        return super(PostManager, self).filter(draft=False)
 
 class Posts(models.Model):
 
@@ -15,8 +18,11 @@ class Posts(models.Model):
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
 
+    objects = PostManager()
+
     def __str__(self):
         return self.title
+
 
 def pre_save_slug(sender, instance, *args, **kwargs):
     slug = slugify(instance.title)
