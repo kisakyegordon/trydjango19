@@ -9,9 +9,11 @@ from .views import (
     posts_detail,
     posts_update,
     posts_delete,
+    posts_welcome,
     )
 
 urlpatterns = [
+    url(r'^$', posts_welcome),
     url(r'^$', posts_home, name="post_home"),
     url(r'^create$', posts_create),
     url(r'^(?P<id>\d+)/$', posts_detail, name="post_detail"),
