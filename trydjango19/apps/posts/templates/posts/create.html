@@ -1,12 +1,15 @@
 {% extends "posts/base.html" %}
 
 {% block content %}
-
-<form method='POST' enctype="multipart/form-data">
+<div class="container">
+<div class="form-after-form">
+<form class="metal-gear-liquid" method='POST' enctype="multipart/form-data">
     {% csrf_token %}
     {{form.as_p}}
     <button type="submit"> Save </button>
 </form>
+</div>
+</div>
 
 {% endblock %}
 
