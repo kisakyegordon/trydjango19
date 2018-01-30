@@ -21,8 +21,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
+
 urlpatterns = [
-    url(r'^$', include("trydjango19.apps.posts.urls")),
+    url(r'^$', include("trydjango19.apps.home.urls")),
     url(r'^admin/', admin.site.urls),
     url(r'^posts/', include("trydjango19.apps.posts.urls")),
 ]

@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.utils import timezone
+from django.utils import timezone, timesince
 from django.shortcuts import Http404, render, get_object_or_404, redirect
 from .models import Posts
 from .forms import PostForm
@@ -11,22 +11,6 @@ from django.core.files.storage import FileSystemStorage
 from django.db.models import Q
 
 
-
-# def listing(request):
-#     contact_list = Contacts.objects.all()
-#     paginator = Paginator(contact_list, 25) # Show 25 contacts per page
-
-#     page = request.GET.get('page')
-#     try:
-#         contacts = paginator.page(page)
-#     except PageNotAnInteger:
-#         # If page is not an integer, deliver first page.
-#         contacts = paginator.page(1)
-#     except EmptyPage:
-#         # If page is out of range (e.g. 9999), deliver last page of results.
-#         contacts = paginator.page(paginator.num_pages)
-
-#     return render(request, 'list.html', {'contacts': contacts})
 
 def posts_welcome(request):
     return render(request, "posts/welcome.html")
@@ -50,7 +34,7 @@ def posts_home(request):
             Q(content__icontains=query) ).distinct()
         else:
             queryset = Posts.objects.all().order_by("-created")
-    paginator = Paginator(queryset, 4) # show 5 articles per page
+    paginator = Paginator(queryset, 3) # show 5 articles per page
     page = request.GET.get('page')
 
     try:
