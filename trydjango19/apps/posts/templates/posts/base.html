@@ -25,10 +25,13 @@
         {% endif %}
         
         {% block content %}
-        <h4> {{ title }} Says Try Django 9 Tutorial </h4>
+        <div class="top-bar">
+            <!-- <h4> {{ title }} Says Try Django 9 Tutorial </h4> -->
+        </div>
+        
 
-        <form method="GET" >
-            <input type="text" name="q" placeholder="search posts" value= {{ request.GET.q }} />
+        <form method="GET" action=''>
+            <input type="text" name="q" placeholder="Search posts" value="{{ request.get.q }}" />
             <input type="submit" value="search" />
         </form>
 

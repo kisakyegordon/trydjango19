@@ -28,6 +28,9 @@ from django.db.models import Q
 
 #     return render(request, 'list.html', {'contacts': contacts})
 
+def posts_welcome(request):
+    return render(request, "posts/welcome.html")
+    
 
 def posts_home(request):
     """ Handles display of all available lists """
@@ -41,8 +44,13 @@ def posts_home(request):
             Q(content__icontains=query) ).distinct()
 
     if request.user.is_staff or request.user.is_superuser:
-        queryset = Posts.objects.all().order_by("-created")
-    paginator = Paginator(queryset, 2) # show 5 articles per page
+        if query:
+            queryset = Posts.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) ).distinct()
+        else:
+            queryset = Posts.objects.all().order_by("-created")
+    paginator = Paginator(queryset, 4) # show 5 articles per page
     page = request.GET.get('page')
 
     try:
